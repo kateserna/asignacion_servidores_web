@@ -48,6 +48,6 @@ jobs:
               git fetch
               git checkout green
               git pull origin green
-              git rebase --allow-unrelated-histories blue
+              git rebase blue
               git push origin green
               echo "La versión Blue ha sido promovida a Green."
