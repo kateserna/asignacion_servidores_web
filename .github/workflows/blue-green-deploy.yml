@@ -6,7 +6,7 @@ on:
             - blue
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -25,10 +25,11 @@ jobs:
             run: |
               RESPONSE=$(curl -s https://kateserna.github.io/asignacion_servidores_web/)
               echo "$RESPONSE" 
-              if [[ "$RESPONSE" != *"Fecha"* ]]; then
+              if [[ "$RESPONSE" != *"Version: 1.0"* ]]; then
                 echo "Test Success: Las pruebas pasaron exitosamente."
               else
                 echo "Test Failed: Las pruebas fallaron, la verion blue no tiene el texto esperado."
+                echo "Realizando rollback a la versión green."
                 exit 1
               fi
     
@@ -36,19 +37,21 @@ jobs:
             if: success()
             run: echo "La versión blue está lista para ser promovida."
     
-          - name: Rollback to green
-            if: failure()
-            run: echo "Las pruebas fallaron. Realizando rollback a la versión green."
-
           - name: Promote Blue to Green
             if: success()
             run: |
               git config --global user.name "GitHub Actions"
               git config --global user.email "actions@github.com"
               git fetch
-              git checkout blue
-              git pull origin blue
               git rebase --force green
-              git checkout green
-              git push origin green
               echo "La versión Blue ha sido promovida a Green."
+
+          - name: Subir archivos
+            uses: actions/upload-pages-artifact@v3
+            with:
+              path: '.'  # Subir TODO el contenido de la raíz
+    
+          - name: Desplegar en GitHub Pages
+            id: deployment
+            uses: actions/deploy-pages@v4
+                
