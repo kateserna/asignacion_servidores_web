@@ -25,7 +25,7 @@ jobs:
             run: |
               RESPONSE=$(curl -s https://kateserna.github.io/asignacion_servidores_web/)
               echo "$RESPONSE" 
-              if [[ "$RESPONSE" != *"Creada por:"* ]]; then
+              if [[ "$RESPONSE" != *"Serna"* ]]; then
                 echo "Test Success: Las pruebas pasaron exitosamente."
               else
                 echo "Test Failed: Las pruebas fallaron, la verion blue no tiene el texto esperado."
@@ -45,8 +45,6 @@ jobs:
             run: |
               git config --global user.name "GitHub Actions"
               git config --global user.email "actions@github.com"
-              git branch
-              git status
               git fetch
               git checkout green
               git pull origin green
