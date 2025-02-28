@@ -31,7 +31,7 @@ jobs:
     
           - name: Test on blue version
             run: |
-                if grep "Version: 2.15" index.html; then
+                if grep "Version: 2.16" index.html; then
                     echo "Test Success: Las pruebas a blue pasaron exitosamente."
                     echo "La versión blue está lista para ser promovida."
                 else
@@ -50,14 +50,14 @@ jobs:
 
           - name: Test on green version
             run: |
-                if grep "Version: 2.14" index.html; then
+                if grep "Version: 2.15" index.html; then
                     echo "Test Success: Las pruebas a green pasaron exitosamente."
                     echo "La versión green está lista para ser desplegada a GitHub Pages."
                 else
                     echo "Test Failed: Las pruebas a green fallaron, la versión green no tiene el texto esperado."
                     echo "Realizando rollback a la versión green."
-                    git revert
-                    git push origin
+                    git revert HEAD~1
+                    git push origin green
                     echo "Rollback realizado. Saliendo con error!"
                     exit 1
                 fi
