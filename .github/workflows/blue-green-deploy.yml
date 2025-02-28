@@ -32,7 +32,7 @@ jobs:
     
           - name: Test on blue version
             run: |
-                if grep "Version: 2.30" index.html; then
+                if grep "Version: 2.31" index.html; then
                     echo "Test Success: Las pruebas a blue pasaron exitosamente."
                     echo "La versión blue está lista para ser promovida."
                 else
