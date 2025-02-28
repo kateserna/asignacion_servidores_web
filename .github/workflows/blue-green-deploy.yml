@@ -12,16 +12,6 @@ permissions:
   id-token: write
   actions: write
 
-  checks: write
-  deployments: write
-  discussions: write
-  issues: write
-  packages: write
-  pull-requests: write
-  repository-projects: write
-  security-events: write
-  statuses: write
-
 jobs:
     deploy-test:
         runs-on: ubuntu-latest
@@ -42,7 +32,7 @@ jobs:
     
           - name: Test on blue version
             run: |
-                if grep "Version: 2.28" index.html; then
+                if grep "Version: 2.29" index.html; then
                     echo "Test Success: Las pruebas a blue pasaron exitosamente."
                     echo "La versión blue está lista para ser promovida."
                 else
@@ -61,7 +51,7 @@ jobs:
 
           - name: Test on green version
             run: |
-                if grep "Version: 2.27" index.html; then
+                if grep "Version: 2.28" index.html; then
                     echo "Test Success: Las pruebas a green pasaron exitosamente."
                     echo "La versión green está lista para ser desplegada a GitHub Pages."
                 else
